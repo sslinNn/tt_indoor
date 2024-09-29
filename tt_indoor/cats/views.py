@@ -1,7 +1,7 @@
-from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .models import Cat
+from rest_framework import viewsets
 from .serializers import CatSerializer
+from .models import Cat
 
 
 class CatViewSet(viewsets.ModelViewSet):
