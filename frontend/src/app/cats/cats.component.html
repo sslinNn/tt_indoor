@@ -1,0 +1,11 @@
+<div class="main">
+  <h2>Список кошек</h2>
+  <ul>
+    <li *ngFor="let cat of cats">
+      <p>Имя: {{ cat.name }}</p>
+      <p>Возраст: {{ cat.age }}</p>
+      <p>Порода: {{ cat.breed }}</p>
+      <p>Волосатость: {{ cat.is_furry }}</p>
+    </li>
+  </ul>
+</div>

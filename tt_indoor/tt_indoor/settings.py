@@ -54,21 +54,26 @@ REST_FRAMEWORK = {
     )
 }
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200",  # Укажите адрес вашего Angular приложения
+    "http://localhost:4200",
 ]
 
 DJOSER = {
+    'LOGIN_FIELD': 'username',  # Используем email для входа
+    'USER_CREATE_PASSWORD_RETYPE': True,  # Требуем повторный ввод пароля при регистрации
+    'SEND_ACTIVATION_EMAIL': False,  # Если нужно, можно включить активацию через email
 }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'tt_indoor.urls'

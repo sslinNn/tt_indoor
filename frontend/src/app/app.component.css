@@ -1,0 +1,6 @@
+nav {
+  display: flex;
+  unicode-bidi: isolate;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
