@@ -1,11 +1,13 @@
-<nav>
-  <a routerLink="/register">Register</a>
-  <a routerLink="/login">Login</a>
-  <a routerLink="/cats">Cats</a>
-</nav>
-<div *ngIf="username" class="usr">
-  <p *ngIf="username">{{ username }}</p>
-  <button (click)="logout()">Logout</button>
-</div>
+<header>
+  <nav>
+    <a routerLink="/register">Register</a>
+    <a routerLink="/login">Login</a>
+    <a routerLink="/cats">Cats</a>
+  </nav>
+  <div *ngIf="username" class="usr">
+    <p *ngIf="username">{{ username }}</p>
+    <button (click)="logout()">Logout</button>
+  </div>
+</header>
 
 <router-outlet> </router-outlet>

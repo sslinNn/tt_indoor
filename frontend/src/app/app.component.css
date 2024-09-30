@@ -1,6 +1,19 @@
 nav {
   display: flex;
   unicode-bidi: isolate;
-  flex-wrap: nowrap;
-  justify-content: space-around;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+div.usr {
+  display: flex;
 }
