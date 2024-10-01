@@ -9,6 +9,7 @@ import { AuthService } from './auth.service';
 // implements OnInit
 export class AppComponent implements OnInit, OnChanges {
   username: string = '';
+  id: number = 0
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {

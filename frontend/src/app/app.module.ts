@@ -15,6 +15,7 @@ import { TokenInterceptor } from './token.interceptor';
 import { CatsComponent } from './cats/cats.component';
 import { CatsService } from './cats.service';
 import { AuthService } from './auth.service';
+import { CatComponent } from './cat/cat.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AuthService } from './auth.service';
     RegisterComponent,
     LoginComponent,
     CatsComponent,
+    CatComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [

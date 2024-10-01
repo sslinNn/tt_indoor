@@ -16,7 +16,7 @@ export class LoginComponent {
   constructor(private authServise: AuthService, private router: Router) {}
 
   login() {
-    this.authServise.login(this.username, this.password).subscribe(
+    this.authServise.login(this.password, this.username).subscribe(
       (response) => {
         localStorage.setItem('auth_token', response.auth_token);
         location.reload();

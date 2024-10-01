@@ -1,11 +1,58 @@
 <div class="main">
   <h2>Список кошек</h2>
   <ul>
-    <li *ngFor="let cat of cats">
-      <p>Имя: {{ cat.name }}</p>
-      <p>Возраст: {{ cat.age }}</p>
-      <p>Порода: {{ cat.breed }}</p>
-      <p>Волосатость: {{ cat.is_furry }}</p>
-    </li>
+    <div class="cat">
+      <li *ngFor="let cat of cats">
+        
+        <p>Имя: <a routerLink="/cat/{{cat.id}}">{{ cat.name }}</a></p>
+        <p>Возраст: {{ cat.age }}</p>
+        <p>Порода: {{ cat.breed }}</p>
+        <p>Волосатость: {{ cat.is_furry ? "Да" : "Нет" }}</p>
+        <button (click)="delCat(cat.id)">Удалить котейку</button>
+      </li>
+    </div>
   </ul>
+
+  <button (click)="toggleForm()">Добавить котейку</button>
+
+  <div *ngIf="isFormVisible">
+    <form (ngSubmit)="create_cat()">
+      <label for="name">Имя:</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="formData.name"
+        required
+      />
+
+      <label for="age">Возраст:</label>
+      <input
+        type="number"
+        id="age"
+        name="age"
+        [(ngModel)]="formData.age"
+        required
+      />
+
+      <label for="breed">Порода:</label>
+      <input
+        type="text"
+        id="breed"
+        name="breed"
+        [(ngModel)]="formData.breed"
+        required
+      />
+
+      <label for="is_furry">Волосатость:</label>
+      <input
+        type="checkbox"
+        id="is_furry"
+        name="is_furry"
+        [(ngModel)]="formData.is_furry"
+      />
+
+      <button type="submit">Отправить</button>
+    </form>
+  </div>
 </div>
