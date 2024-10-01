@@ -1,0 +1,36 @@
+<div class="main">
+  <h2>Информация о коте</h2>
+
+  <ul *ngIf="!isEditing">
+    <li>
+      <p>Имя: {{ cat.name }}</p>
+      <p>Возраст: {{ cat.age }}</p>
+      <p>Порода: {{ cat.breed }}</p>
+      <p>Волосатость: {{ cat.is_furry ? 'Да' : 'Нет' }}</p>
+    </li>
+    <button (click)="toggleEdit()">Редактировать</button>
+  </ul>
+
+  <div *ngIf="isEditing">
+    <form>
+      <label>Имя:
+        <input [(ngModel)]="cat.name" name="name" />
+      </label>
+      <br />
+      <label>Возраст:
+        <input [(ngModel)]="cat.age" name="age" type="number" />
+      </label>
+      <br />
+      <label>Порода:
+        <input [(ngModel)]="cat.breed" name="breed" />
+      </label>
+      <br />
+      <label>Волосатость:
+        <input type="checkbox" [(ngModel)]="cat.is_furry" name="is_furry" />
+      </label>
+      <br />
+      <button (click)="saveCatData()">Сохранить</button>
+      <button (click)="toggleEdit()">Отмена</button>
+    </form>
+  </div>
+</div>
