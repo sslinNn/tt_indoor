@@ -46,6 +46,14 @@ INSTALLED_APPS = [
     'cats',
 ]
 
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
+
+WSGI_APPLICATION = 'tt_indoor.wsgi.application'
 ASGI_APPLICATION = 'tt_indoor.asgi.application'
 CORS_ORIGIN_ALLOW_ALL = True
 REST_FRAMEWORK = {
@@ -93,8 +101,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'tt_indoor.wsgi.application'
 
 DATABASES = {
     'default': {

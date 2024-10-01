@@ -16,6 +16,7 @@ import { CatsComponent } from './cats/cats.component';
 import { CatsService } from './cats.service';
 import { AuthService } from './auth.service';
 import { CatComponent } from './cat/cat.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CatComponent } from './cat/cat.component';
     LoginComponent,
     CatsComponent,
     CatComponent,
+    ChatComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [
