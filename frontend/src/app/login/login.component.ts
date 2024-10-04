@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { error } from 'console';
-import { Token } from '@angular/compiler';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,12 +16,11 @@ export class LoginComponent {
   login() {
     this.authServise.login(this.password, this.username).subscribe(
       (response) => {
-        localStorage.setItem('auth_token', response.auth_token);
-        location.reload();
         console.log('User login successfully', response);
+        location.reload();
       },
       (error) => {
-        console.error('User fucktup', error);
+        console.error('Login failed', error);
       }
     );
   }

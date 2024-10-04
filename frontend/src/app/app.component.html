@@ -1,15 +1,14 @@
 <header>
   <nav>
-    <a routerLink="/register">Register</a>
-    <a routerLink="/login">Login</a>
-    <a routerLink="/cats">Cats</a>
+    <a routerLink="/register">Регистрация</a>
+    <a routerLink="/login">Авторизация</a>
+    <a routerLink="/cats">Котики</a>
+    <a routerLink="/chat">Сообщения</a>
   </nav>
   <div *ngIf="username" class="usr">
     <p *ngIf="username">{{ username }}</p>
     <button (click)="logout()">Logout</button>
   </div>
 </header>
-
-<app-chat></app-chat>
 
 <router-outlet> </router-outlet>

@@ -5,12 +5,15 @@ import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-cats',
   templateUrl: './cats.component.html',
-  styleUrls: ['./cats.component.css'], // исправлено styleUrl на styleUrls
+  styleUrls: ['./cats.component.css'],
 })
 export class CatsComponent implements OnInit {
+  user_LS: any = localStorage.getItem('user');
+  user: any = JSON.parse(this.user_LS);
+  userId: number = this.user.id;
   data: any[] = [];
   cats: any;
-  id: number = 0;
+  id: number = this.userId;
   isFormVisible: boolean = false;
 
   formData = {
@@ -18,7 +21,7 @@ export class CatsComponent implements OnInit {
     age: 0,
     breed: '',
     is_furry: false,
-    breeder: 0,
+    breeder: this.userId,
   };
 
   constructor(
@@ -28,20 +31,6 @@ export class CatsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadcats();
-    this.me();
-  }
-
-  me() {
-    this.authService.me().subscribe(
-      (response) => {
-        this.id = response['id'];
-        this.formData.breeder = this.id; // Обновляем formData после получения id
-        console.log('user id', this.id);
-      },
-      (error) => {
-        console.error('Error', error);
-      }
-    );
   }
 
   loadcats() {
@@ -68,7 +57,7 @@ export class CatsComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('Cat created', response);
-          this.loadcats(); // Перезагружаем список после добавления кота
+          this.loadcats();
         },
         (error) => {
           console.error('Cat not created', error);
@@ -87,8 +76,6 @@ export class CatsComponent implements OnInit {
       }
     );
   }
-
-
 
   toggleForm() {
     this.isFormVisible = !this.isFormVisible;

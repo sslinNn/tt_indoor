@@ -1,41 +1,34 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  styleUrls: ['./app.component.css'],
 })
-// implements OnInit
-export class AppComponent implements OnInit, OnChanges {
+export class AppComponent implements OnInit {
+  user: any;
   username: string = '';
-  id: number = 0
+  id: number = 0;
+
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.me();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes',changes)
-  }
-
-  me() {
-    this.authService.me().subscribe(
-      (response) => {
-        this.username = response['username'];
-        console.log('username', this.username);
-      },
-      (error) => {
-        console.error('Error', error);
+  ngOnInit() {
+    if (typeof localStorage !== 'undefined') {
+      const user_LS = localStorage.getItem('user');
+      if (user_LS) {
+        this.user = JSON.parse(user_LS);
+        this.username = this.user.username;
       }
-    );
+    }
   }
 
   logout() {
     this.authService.logout().subscribe(() => {
-      localStorage.removeItem('auth_token');
-      this.username = '';
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('user');
+      }
       location.reload();
       console.log('User logged out successfully');
     });
