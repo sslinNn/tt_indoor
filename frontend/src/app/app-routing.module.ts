@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'cats', component: CatsComponent },
   { path: 'cat/:id', component: CatComponent },
   { path: 'chat', component: ChatComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -1,6 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { ChatService } from '../chat.service';
 import { Subscription } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-chat',
@@ -10,12 +17,22 @@ import { Subscription } from 'rxjs';
 export class ChatComponent implements OnInit, OnDestroy {
   messages: string[] = [];
   messageText: string = '';
-  user_LS: any = localStorage.getItem('user');
-  user: any = JSON.parse(this.user_LS);
-  userId: number = this.user.id;
+  user_LS: any;
+  user: any;
+  userId: number = 0;
   private messagesSubscription?: Subscription;
 
-  constructor(private chatService: ChatService) {}
+  constructor(
+    private chatService: ChatService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    if (isPlatformBrowser(this.platformId)) {
+      // Проверяем, находимся ли мы на клиенте
+      this.user_LS = localStorage.getItem('user');
+      this.user = JSON.parse(this.user_LS);
+      this.userId = this.user ? this.user.id : 0; // Безопасно извлекаем userId
+    }
+  }
 
   ngOnInit(): void {
     this.chatService.connect();

@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of, switchMap, tap, throwError } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface AuthResponse {
   auth_token: string;
@@ -10,9 +11,12 @@ export interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/auth';
+  private apiUrl = 'http://147.45.103.62/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   register(
     email: string,
@@ -36,13 +40,19 @@ export class AuthService {
       })
       .pipe(
         tap((response) => {
-          localStorage.setItem('auth_token', response.auth_token);
+          if (isPlatformBrowser(this.platformId)) {
+            // Проверяем, находимся ли мы на клиенте
+            localStorage.setItem('auth_token', response.auth_token);
+          }
         }),
         switchMap((response) => {
           // Получаем данные пользователя после успешного входа
           return this.me().pipe(
             tap((userData) => {
-              localStorage.setItem('user', JSON.stringify(userData));
+              if (isPlatformBrowser(this.platformId)) {
+                // Проверяем, находимся ли мы на клиенте
+                localStorage.setItem('user', JSON.stringify(userData));
+              }
             }),
             catchError((error) => {
               console.error('Failed to fetch user data:', error);

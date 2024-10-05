@@ -1,0 +1,51 @@
+version: '3'
+services:
+  redis:
+    image: redis:alpine
+    networks:
+      - backend
+
+  django:
+    build:
+      context: . 
+      dockerfile: ./tt_indoor/Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    networks:
+      - backend
+
+  angular:
+    build:
+      context: . 
+      dockerfile: ./frontend/Dockerfile
+    networks:
+      - frontend
+    volumes:
+      - nginx-html:/usr/share/nginx/html
+
+  nginx:
+    image: nginx:stable
+    ports:
+      - "80:80"
+    depends_on:
+      - django
+      - angular
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - nginx-html:/usr/share/nginx/html
+
+networks:
+  backend:
+  frontend:
+    external: false
+
+volumes:
+  nginx-html:
+
+# volumes:
+#   - /nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro

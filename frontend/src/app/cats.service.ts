@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CatsService {
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = 'http://147.45.103.62:8000/api';
 
   constructor(private http: HttpClient) {}
 

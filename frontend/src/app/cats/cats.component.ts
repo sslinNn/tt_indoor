@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CatsService } from '../cats.service';
 import { AuthService } from '../auth.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-cats',
@@ -8,9 +9,9 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./cats.component.css'],
 })
 export class CatsComponent implements OnInit {
-  user_LS: any = localStorage.getItem('user');
-  user: any = JSON.parse(this.user_LS);
-  userId: number = this.user.id;
+  user_LS: any;
+  user: any;
+  userId: number = 0;
   data: any[] = [];
   cats: any;
   id: number = this.userId;
@@ -26,11 +27,22 @@ export class CatsComponent implements OnInit {
 
   constructor(
     private catsService: CatsService,
-    private authService: AuthService
+    private authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId: Object // Внедрите платформу
   ) {}
 
   ngOnInit(): void {
+    this.loadUser(); // Вызываем метод для загрузки пользователя
     this.loadcats();
+  }
+
+  loadUser(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      // Проверяем, находимся ли мы на клиенте
+      this.user_LS = localStorage.getItem('user');
+      this.user = JSON.parse(this.user_LS);
+      this.userId = this.user ? this.user.id : 0; // Безопасно извлекаем userId
+    }
   }
 
   loadcats() {
@@ -64,6 +76,7 @@ export class CatsComponent implements OnInit {
         }
       );
   }
+
   cat_id: number = 0;
   delCat(catId: number) {
     this.catsService.del_cat(catId).subscribe(

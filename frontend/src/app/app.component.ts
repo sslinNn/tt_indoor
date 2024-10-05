@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { AuthService } from './auth.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +12,14 @@ export class AppComponent implements OnInit {
   username: string = '';
   id: number = 0;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit() {
-    if (typeof localStorage !== 'undefined') {
+    if (isPlatformBrowser(this.platformId)) {
+      // Проверяем, находимся ли мы на клиенте
       const user_LS = localStorage.getItem('user');
       if (user_LS) {
         this.user = JSON.parse(user_LS);
@@ -25,7 +30,8 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.authService.logout().subscribe(() => {
-      if (typeof localStorage !== 'undefined') {
+      if (isPlatformBrowser(this.platformId)) {
+        // Проверяем, находимся ли мы на клиенте
         localStorage.removeItem('auth_token');
         localStorage.removeItem('user');
       }
